@@ -5,18 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.facebook.litho.Component;
 import com.facebook.litho.ComponentContext;
 import com.facebook.litho.LithoView;
-import com.facebook.litho.sections.SectionContext;
-import com.facebook.litho.sections.widget.RecyclerCollectionComponent;
 import com.facebook.litho.widget.Progress;
 
 import com.restauranteur.model.Restaurant;
-import com.restauranteur.view.component.RestaurantSection;
+import com.restauranteur.view.component.RestaurantListComponent;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -62,12 +58,6 @@ public class MainFragment extends Fragment {
                             .build());
         }
 
-        final Component component =
-                RecyclerCollectionComponent.create(c)
-                .disablePTR(true)
-                .section(RestaurantSection.create(new SectionContext(c)).restaurants(restaurants))
-                .build();
-
-        return LithoView.create(c, component);
+        return LithoView.create(c, RestaurantListComponent.create(c).restaurants(restaurants).build());
     }
 }
