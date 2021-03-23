@@ -10,6 +10,7 @@ import com.facebook.litho.widget.Recycler;
 import com.facebook.litho.widget.RecyclerBinder;
 import com.restauranteur.model.Restaurant;
 import com.restauranteur.model.Status;
+import com.restauranteur.view.RestaurantListener;
 
 import java.util.ArrayList;
 
@@ -19,18 +20,25 @@ import androidx.recyclerview.widget.OrientationHelper;
 @LayoutSpec
 public class RestaurantListComponentSpec {
     @OnCreateLayout
-    static Component onCreateLayout(final ComponentContext c, final @Prop ArrayList<Restaurant> restaurants) {
+    static Component onCreateLayout(
+            final ComponentContext c,
+            final @Prop ArrayList<Restaurant> restaurants,
+            final @Prop RestaurantListener restaurantListener) {
         final RecyclerBinder binder = new RecyclerBinder.Builder().layoutInfo(
                 new LinearLayoutInfo(c.getApplicationContext(), OrientationHelper.VERTICAL, false)).build(c);
 
         if (restaurants != null) {
-            addRestaurantsToComponent(c, binder, restaurants);
+            addRestaurantsToComponent(c, binder, restaurants, restaurantListener);
         }
 
         return Recycler.create(c).binder(binder).build();
     }
 
-    private static void addRestaurantsToComponent(final ComponentContext c, final RecyclerBinder binder, final ArrayList<Restaurant> restaurants) {
+    private static void addRestaurantsToComponent(
+            final ComponentContext c,
+            final RecyclerBinder binder,
+            final ArrayList<Restaurant> restaurants,
+            final @Prop RestaurantListener restaurantListener) {
         for (final Restaurant curr : restaurants) {
             binder.appendItem(
                     RestaurantItem.create(c)
@@ -39,6 +47,7 @@ public class RestaurantListComponentSpec {
                             .cuisine(curr.getCuisine())
                             .displayDistance(getDisplayDistance(curr.getStatus()))
                             .popularItems(curr.getMenus().get(0).getMenus())
+                            .restaurantListener(restaurantListener)
                             .build());
         }
     }

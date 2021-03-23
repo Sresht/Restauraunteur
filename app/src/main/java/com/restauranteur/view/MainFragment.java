@@ -48,7 +48,11 @@ public class MainFragment extends Fragment {
                             .build());
         }
 
-        return LithoView.create(c, RestaurantListComponent.create(c).restaurants(restaurants).build());
+        return LithoView.create(c,
+                RestaurantListComponent.create(c)
+                        .restaurants(restaurants)
+                        .restaurantListener((MainActivity) getActivity())
+                        .build());
     }
 
     public MainFragment() {}
@@ -62,4 +66,5 @@ public class MainFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
 }

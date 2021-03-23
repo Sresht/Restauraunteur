@@ -1,10 +1,12 @@
 package com.restauranteur.view;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.facebook.soloader.SoLoader;
 import com.restauranteur.R;
 import com.restauranteur.model.DoorDashResponse;
+import com.restauranteur.model.PopularItem;
 import com.restauranteur.model.Restaurant;
 import com.restauranteur.parser.DoorDashDataParser;
 
@@ -19,7 +21,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RestaurantListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,5 +69,10 @@ public class MainActivity extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.content, MainFragment.newInstance(restaurants))
                 .commit();
+    }
+
+    @Override
+    public void onRestaurantClicked(final ArrayList<PopularItem> menuItems) {
+        Toast.makeText(this, menuItems.get(0).getName(), Toast.LENGTH_SHORT).show();
     }
 }

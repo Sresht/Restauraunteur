@@ -6,18 +6,21 @@ import android.graphics.Typeface;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.litho.Border;
+import com.facebook.litho.ClickEvent;
 import com.facebook.litho.Column;
 import com.facebook.litho.Component;
 import com.facebook.litho.ComponentContext;
 import com.facebook.litho.Row;
 import com.facebook.litho.annotations.LayoutSpec;
 import com.facebook.litho.annotations.OnCreateLayout;
+import com.facebook.litho.annotations.OnEvent;
 import com.facebook.litho.annotations.Prop;
 import com.facebook.litho.fresco.FrescoImage;
 import com.facebook.litho.widget.Text;
 import com.facebook.yoga.YogaEdge;
 import com.restauranteur.R;
 import com.restauranteur.model.PopularItem;
+import com.restauranteur.view.RestaurantListener;
 
 import java.util.ArrayList;
 
@@ -35,8 +38,8 @@ public class RestaurantItemSpec {
             @Prop final String title,
             @Prop @Nullable final String coverImageUrl,
             @Prop final String cuisine,
-            @Prop final String displayDistance,
-            @Prop final ArrayList<PopularItem> popularItems
+            // TODO pass ID in too - just to be a unique id
+            @Prop final String displayDistance
             ) {
         Fresco.initialize(c.getApplicationContext());
 
@@ -74,6 +77,16 @@ public class RestaurantItemSpec {
                         .widthDip(YogaEdge.BOTTOM, 1)
                         .color(YogaEdge.BOTTOM, Color.LTGRAY)
                         .build())
+                .clickHandler(RestaurantItem.onClick(c))
                 .build();
+    }
+
+    @OnEvent(ClickEvent.class)
+    static void onClick(
+            ComponentContext c,
+            @Prop final ArrayList<PopularItem> popularItems,
+            @Prop final RestaurantListener restaurantListener
+    ) {
+        restaurantListener.onRestaurantClicked(popularItems);
     }
 }
