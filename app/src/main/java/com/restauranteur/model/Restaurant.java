@@ -3,11 +3,13 @@ package com.restauranteur.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 public class Restaurant implements Parcelable {
     private final String name;
     private final String url;
     private final String cover_img_url;
-
+    private final ArrayList<Menu> menus;
 
     @Override
     public int describeContents() {
@@ -18,6 +20,7 @@ public class Restaurant implements Parcelable {
         name = in.readString();
         url = in.readString();
         cover_img_url = in.readString();
+        menus = in.createTypedArrayList(Menu.CREATOR);
     }
 
     public String getName() {
@@ -32,11 +35,16 @@ public class Restaurant implements Parcelable {
         return cover_img_url;
     }
 
+    public ArrayList<Menu> getMenus() {
+        return menus;
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int i) {
         dest.writeString(name);
         dest.writeString(url);
         dest.writeString(cover_img_url);
+        dest.writeTypedList(menus);
     }
 
     public static final Parcelable.Creator<Restaurant> CREATOR = new Parcelable.Creator<Restaurant>() {
