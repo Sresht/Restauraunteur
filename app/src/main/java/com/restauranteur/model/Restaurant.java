@@ -10,6 +10,8 @@ public class Restaurant implements Parcelable {
     private final String url;
     private final String cover_img_url;
     private final ArrayList<Menu> menus;
+    private final Status status;
+    private final String description;
 
     @Override
     public int describeContents() {
@@ -21,6 +23,8 @@ public class Restaurant implements Parcelable {
         url = in.readString();
         cover_img_url = in.readString();
         menus = in.createTypedArrayList(Menu.CREATOR);
+        status = in.readTypedObject(Status.CREATOR);
+        description = in.readString();
     }
 
     public String getName() {
@@ -39,12 +43,27 @@ public class Restaurant implements Parcelable {
         return menus;
     }
 
+    public String getCuisine() {
+        // TODO this isn't perfect, but it works most of the time. Might need to hit a different
+        // endpoint
+        return description.split(",")[0];
+    }
+
+    public String getDistanceOrClosed() {
+        if (!status.getIsAvailable()) {
+            return "Closed";
+        }
+        return Integer.toString(status.getMinutesAway()) + " mins";
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int i) {
         dest.writeString(name);
         dest.writeString(url);
         dest.writeString(cover_img_url);
         dest.writeTypedList(menus);
+        dest.writeTypedObject(status, i);
+        dest.writeString(description);
     }
 
     public static final Parcelable.Creator<Restaurant> CREATOR = new Parcelable.Creator<Restaurant>() {
