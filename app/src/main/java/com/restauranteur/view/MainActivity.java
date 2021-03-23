@@ -4,8 +4,9 @@ import android.os.Bundle;
 
 import com.facebook.soloader.SoLoader;
 import com.restauranteur.R;
-import com.restauranteur.parser.DoorDashDataParser;
 import com.restauranteur.model.DoorDashResponse;
+import com.restauranteur.model.Restaurant;
+import com.restauranteur.parser.DoorDashDataParser;
 
 import java.util.ArrayList;
 
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.annotations.Nullable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -46,22 +48,24 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(@NonNull DoorDashResponse doorDashResponse) {
-                        getSupportFragmentManager()
-                                .beginTransaction()
-                                .replace(R.id.content, MainFragment.newInstance(new ArrayList<>(doorDashResponse.getStores())))
-                                .commit();
+                        showMainFragment(new ArrayList<>(doorDashResponse.getStores()));
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        // TODO display a toast
-                        displaySpinnerFragment();
+                        showMainFragment(null);
                     }
 
                     @Override
                     public void onComplete() { }
                 }
         );
+    }
 
+    private void showMainFragment(@Nullable final ArrayList<Restaurant> restaurants) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content, MainFragment.newInstance(restaurants))
+                .commit();
     }
 }

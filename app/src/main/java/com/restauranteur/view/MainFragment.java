@@ -27,7 +27,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fetchRestaurants();
+        DoorDashDataParser.getDoorDashData();
         if (getArguments() != null) {
             restaurants = getArguments().getParcelableArrayList(RESTAURANT_LIST_KEY);
         }
@@ -38,9 +38,9 @@ public class MainFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         final ComponentContext c = new ComponentContext(getContext());
-        fetchRestaurants();
         if (restaurants == null) {
-            // TODO be more descriptive based on the error
+            // TODO be more descriptive based on the error.
+            // TODO style this to look a bit nicer.
             return LithoView.create(
                     getContext(),
                     Text.create(c)
@@ -61,9 +61,5 @@ public class MainFragment extends Fragment {
         }
         fragment.setArguments(args);
         return fragment;
-    }
-
-    private void fetchRestaurants() {
-        final DoorDashDataParser.DoorDashDataService service = DoorDashDataParser.getDoorDashData();
     }
 }
