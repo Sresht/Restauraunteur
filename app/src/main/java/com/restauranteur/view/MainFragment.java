@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import com.facebook.litho.ComponentContext;
 import com.facebook.litho.LithoView;
 import com.facebook.litho.widget.Progress;
-
 import com.restauranteur.model.Restaurant;
+import com.restauranteur.parser.DoorDashDataParser;
 import com.restauranteur.view.component.RestaurantListComponent;
 
 import java.util.ArrayList;
@@ -27,10 +27,30 @@ public class MainFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fetchRestaurants();
         if (getArguments() != null) {
             restaurants = getArguments().getParcelableArrayList(RESTAURANT_LIST_KEY);
         }
     }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        final ComponentContext c = new ComponentContext(getContext());
+        fetchRestaurants();
+        if (restaurants == null) {
+            // TODO throw up a litho error component or at least a toast
+            return LithoView.create(
+                    getContext(),
+                    Progress.create(c)
+                            .build());
+        }
+
+        return LithoView.create(c, RestaurantListComponent.create(c).restaurants(restaurants).build());
+    }
+
+    public MainFragment() {}
 
     public static MainFragment newInstance(final ArrayList<Restaurant> restaurants) {
         MainFragment fragment = new MainFragment();
@@ -42,22 +62,7 @@ public class MainFragment extends Fragment {
         return fragment;
     }
 
-    public MainFragment() {}
-
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        final ComponentContext c = new ComponentContext(getContext());
-
-        if (restaurants == null) {
-            // TODO throw up a litho error component or at least a toast
-            return LithoView.create(
-                    getContext(),
-                    Progress.create(c)
-                            .build());
-        }
-
-        return LithoView.create(c, RestaurantListComponent.create(c).restaurants(restaurants).build());
+    private void fetchRestaurants() {
+        final DoorDashDataParser.DoorDashDataService service = DoorDashDataParser.getDoorDashData();
     }
 }

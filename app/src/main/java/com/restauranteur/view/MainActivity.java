@@ -1,14 +1,21 @@
 package com.restauranteur.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+
 import com.facebook.soloader.SoLoader;
 import com.restauranteur.R;
-import com.restauranteur.model.Restaurant;
+import com.restauranteur.parser.DoorDashDataParser;
+import com.restauranteur.parser.DoorDashResponse;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,27 +24,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         SoLoader.init(this, false);
+        final DoorDashDataParser.DoorDashDataService service = DoorDashDataParser.getDoorDashData();
 
-        fetchRestaurants();
-    }
 
-    private void fetchRestaurants() {
         displaySpinnerFragment();
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) { }
-
-        // TODO replace with network logic
-        final ArrayList<Restaurant> restaurantsList = new ArrayList<>();
-        final ArrayList<String> dishes = new ArrayList<>();
-        dishes.add("pasta");
-        for (int i = 0; i < 1000; i++) {
-            restaurantsList.add(new Restaurant(Integer.toString(i), dishes));
-        }
-
-        if (restaurantsList != null) {
-            displayRestaurants(restaurantsList);
-        }
+        displayRestaurants(service);
     }
 
     private void displaySpinnerFragment() {
@@ -47,10 +38,30 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
-    private void displayRestaurants(final ArrayList<Restaurant> restaurants) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.content, MainFragment.newInstance(restaurants))
-                .commit();
+    private void displayRestaurants(final DoorDashDataParser.DoorDashDataService service) {
+        service.getRestaurants().subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(
+                new Observer<DoorDashResponse>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {}
+
+                    @Override
+                    public void onNext(@NonNull DoorDashResponse doorDashResponse) {
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.content, MainFragment.newInstance(new ArrayList<>(doorDashResponse.getStores())))
+                                .commit();
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        // TODO display a toast
+                        displaySpinnerFragment();
+                    }
+
+                    @Override
+                    public void onComplete() { }
+                }
+        );
+
     }
 }

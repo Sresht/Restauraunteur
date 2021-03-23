@@ -41,7 +41,7 @@ dependencies {
     implementation 'com.facebook.litho:litho-widget:0.40.0'
     compileOnly 'com.facebook.litho:litho-annotations:0.40.0'
 
-    annotationProcessor 'com.facebook.litho:litho-processor:0.23.0'
+    annotationProcessor 'com.facebook.litho:litho-processor:0.40.0'
 
     // Litho Sections
     implementation 'com.facebook.litho:litho-sections-core:0.40.0'
@@ -53,4 +53,15 @@ dependencies {
     // SoLoader
     implementation 'com.facebook.soloader:soloader:0.5.1'
 
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.4.0"
+
+    // Gson
+    implementation 'com.google.code.gson:gson:2.8.6'
+
+    // RXJava
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.10'
 }

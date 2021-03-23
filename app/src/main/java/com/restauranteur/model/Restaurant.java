@@ -3,52 +3,51 @@ package com.restauranteur.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Restaurant implements Parcelable {
     private final String name;
-    private final List<String> dishes;
+    private final String url;
+    private final String cover_img_url;
+
 
     @Override
     public int describeContents() {
         return 0;
     }
 
-    public Restaurant(final String name, final ArrayList<String> dishes) {
-        this.name = name;
-        this.dishes = dishes;
-    }
-
     protected Restaurant(final Parcel in) {
-        this.name = in.readString();
-        this.dishes = in.readArrayList(Restaurant.class.getClassLoader());
+        name = in.readString();
+        url = in.readString();
+        cover_img_url = in.readString();
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
-    public List<String> getDishes() {
-        return this.dishes;
+    public String getUrl() {
+        return url;
+    }
+
+    public String getCoverImageUrl() {
+        return cover_img_url;
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.name);
-        dest.writeList(this.dishes);
+    public void writeToParcel(Parcel dest, int i) {
+        dest.writeString(name);
+        dest.writeString(url);
+        dest.writeString(cover_img_url);
     }
 
     public static final Parcelable.Creator<Restaurant> CREATOR = new Parcelable.Creator<Restaurant>() {
         @Override
-        public Restaurant createFromParcel(Parcel source) {
+        public Restaurant createFromParcel(final Parcel source) {
             return new Restaurant(source);
         }
 
         @Override
-        public Restaurant[] newArray(int size) {
+        public Restaurant[] newArray(final int size) {
             return new Restaurant[size];
         }
     };
-
 }
