@@ -50,8 +50,12 @@ dependencies {
 
     annotationProcessor 'com.facebook.litho:litho-sections-processor:0.40.0'
 
+    // Fresco
+    implementation 'com.facebook.litho:litho-fresco:0.40.0'
+    implementation 'com.facebook.fresco:fresco:1.13.0'
+
     // SoLoader
-    implementation 'com.facebook.soloader:soloader:0.5.1'
+    implementation 'com.facebook.soloader:soloader:0.6.0'
 
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'

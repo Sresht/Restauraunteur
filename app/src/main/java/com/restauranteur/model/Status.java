@@ -17,8 +17,8 @@ public class Status implements Parcelable {
         in.readIntArray(asap_minutes_range);
     }
 
-    public boolean getIsAvailable() {
-        return unavailable_reason != null;
+    public String getUnavailableReason() {
+        return unavailable_reason;
     }
 
     public int getMinutesAway() {

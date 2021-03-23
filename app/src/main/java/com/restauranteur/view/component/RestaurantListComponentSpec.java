@@ -9,6 +9,7 @@ import com.facebook.litho.widget.LinearLayoutInfo;
 import com.facebook.litho.widget.Recycler;
 import com.facebook.litho.widget.RecyclerBinder;
 import com.restauranteur.model.Restaurant;
+import com.restauranteur.model.Status;
 
 import java.util.ArrayList;
 
@@ -31,8 +32,21 @@ public class RestaurantListComponentSpec {
 
     private static void addRestaurantsToComponent(final ComponentContext c, final RecyclerBinder binder, final ArrayList<Restaurant> restaurants) {
         for (final Restaurant curr : restaurants) {
-            binder.appendItem(RestaurantItem.create(c)
-                    .title(curr.getName()).build());
+            binder.appendItem(
+                    RestaurantItem.create(c)
+                            .title(curr.getName())
+                            .coverImageUrl(curr.getCoverImageUrl())
+                            .cuisine(curr.getCuisine())
+                            .displayDistance(getDisplayDistance(curr.getStatus()))
+                            .popularItems(curr.getMenus().get(0).getMenus())
+                            .build());
         }
+    }
+
+    private static String getDisplayDistance(final Status status) {
+        if (status.getUnavailableReason() != null) {
+            return "Closed";
+        }
+        return Integer.toString(status.getMinutesAway()) + " mins";
     }
 }

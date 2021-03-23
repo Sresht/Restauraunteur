@@ -49,11 +49,8 @@ public class Restaurant implements Parcelable {
         return description.split(",")[0];
     }
 
-    public String getDistanceOrClosed() {
-        if (!status.getIsAvailable()) {
-            return "Closed";
-        }
-        return Integer.toString(status.getMinutesAway()) + " mins";
+    public Status getStatus() {
+        return status;
     }
 
     @Override
