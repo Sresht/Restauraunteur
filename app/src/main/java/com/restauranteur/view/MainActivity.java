@@ -13,6 +13,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        displaySpinnerFragment();
         SoLoader.init(this, false);
     }
+
+    public void displaySpinnerFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content, new LoadingFragment())
+                .commit();
+    }
+
 }
