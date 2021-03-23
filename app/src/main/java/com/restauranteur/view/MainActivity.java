@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.facebook.soloader.SoLoader;
 import com.restauranteur.R;
 import com.restauranteur.parser.DoorDashDataParser;
-import com.restauranteur.parser.DoorDashResponse;
+import com.restauranteur.model.DoorDashResponse;
 
 import java.util.ArrayList;
 

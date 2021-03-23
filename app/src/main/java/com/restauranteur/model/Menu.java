@@ -17,7 +17,6 @@ public class Menu implements Parcelable {
         popular_items = in.createTypedArrayList(PopularItem.CREATOR);
     }
 
-
     public ArrayList<PopularItem> getMenus() {
         return popular_items;
     }

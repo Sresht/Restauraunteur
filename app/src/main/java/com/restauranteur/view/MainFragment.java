@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import com.facebook.litho.ComponentContext;
 import com.facebook.litho.LithoView;
-import com.facebook.litho.widget.Progress;
+import com.facebook.litho.widget.Text;
 import com.restauranteur.model.Restaurant;
 import com.restauranteur.parser.DoorDashDataParser;
 import com.restauranteur.view.component.RestaurantListComponent;
@@ -40,10 +40,11 @@ public class MainFragment extends Fragment {
         final ComponentContext c = new ComponentContext(getContext());
         fetchRestaurants();
         if (restaurants == null) {
-            // TODO throw up a litho error component or at least a toast
+            // TODO be more descriptive based on the error
             return LithoView.create(
                     getContext(),
-                    Progress.create(c)
+                    Text.create(c)
+                            .text("An error has occurred. Please close the app and try again.")
                             .build());
         }
 

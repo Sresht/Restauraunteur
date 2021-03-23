@@ -1,19 +1,16 @@
-package com.restauranteur.parser;
+package com.restauranteur.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import com.restauranteur.model.Restaurant;
 
 import java.util.ArrayList;
 
 public class DoorDashResponse implements Parcelable {
     // TODO handle error codes
 
-    private int numResults;
-    private int nextOffSet;
-    private ArrayList<Restaurant> stores;
-
+    private final int numResults;
+    private final int nextOffSet;
+    private final ArrayList<Restaurant> stores;
 
     @Override
     public int describeContents() {
@@ -30,8 +27,6 @@ public class DoorDashResponse implements Parcelable {
     public ArrayList<Restaurant> getStores() {
         return this.stores;
     }
-
-    public DoorDashResponse() {}
 
     protected DoorDashResponse(final Parcel input) {
         numResults = input.readInt();
