@@ -12,14 +12,17 @@ import com.restauranteur.model.DoorDashResponse;
 import java.lang.reflect.Type;
 
 import io.reactivex.Observable;
-
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 
+import static com.restauranteur.constant.Constants.DOORDASH_API_BASE_URL;
+import static com.restauranteur.constant.Constants.DOORDASH_API_RESTAURANTS_LIMIT;
+import static com.restauranteur.constant.Constants.SEARCH_COORDINATES;
+
 public class DoorDashDataParser {
-    private static final String API_URL = "https://api.doordash.com/v1/store_feed/?lat=37.422740&lng=-122.139956&offset=0&limit=50";
+    private static final int offset = 0;
 
     public static DoorDashDataService getDoorDashData() {
         Gson gson = new GsonBuilder()
@@ -28,7 +31,7 @@ public class DoorDashDataParser {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(API_URL)
+                .baseUrl(getDoorDashApiUrl())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
@@ -44,6 +47,15 @@ public class DoorDashDataParser {
                 final JsonDeserializationContext context) {
             return new Gson().fromJson(json, DoorDashResponse.class);
         }
+    }
+
+    private static String getDoorDashApiUrl() {
+        return String.format(
+                DOORDASH_API_BASE_URL,
+                SEARCH_COORDINATES.first,
+                SEARCH_COORDINATES.second,
+                offset,
+                DOORDASH_API_RESTAURANTS_LIMIT);
     }
 
     public interface DoorDashDataService {
