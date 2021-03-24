@@ -7,10 +7,11 @@ import android.view.ViewGroup;
 
 import com.facebook.litho.ComponentContext;
 import com.facebook.litho.LithoView;
+import com.facebook.litho.widget.LinearLayoutInfo;
+import com.facebook.litho.widget.RecyclerBinder;
 import com.facebook.litho.widget.Text;
 import com.restauranteur.R;
 import com.restauranteur.model.Restaurant;
-import com.restauranteur.parser.DoorDashDataParser;
 import com.restauranteur.view.component.RestaurantListComponent;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.OrientationHelper;
 
 public class MainFragment extends Fragment {
 
@@ -28,7 +30,6 @@ public class MainFragment extends Fragment {
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DoorDashDataParser.getDoorDashData();
         if (getArguments() != null) {
             restaurants = getArguments().getParcelableArrayList(RESTAURANT_LIST_KEY);
         }
@@ -49,10 +50,21 @@ public class MainFragment extends Fragment {
                             .build());
         }
 
+
+        final RecyclerBinder binder = new RecyclerBinder.Builder()
+                .layoutInfo(
+                        new LinearLayoutInfo(
+                                getContext(),
+                                OrientationHelper.VERTICAL,
+                                false))
+                .build(c);
+
         return LithoView.create(c,
                 RestaurantListComponent.create(c)
+                        .binder(binder)
                         .restaurants(restaurants)
                         .restaurantListener((MainActivity) getActivity())
+                        .paginator((MainActivity) getActivity())
                         .build());
     }
 
@@ -68,3 +80,5 @@ public class MainFragment extends Fragment {
         return fragment;
     }
 }
+
+

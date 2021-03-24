@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.facebook.soloader.SoLoader;
 import com.restauranteur.R;
+import com.restauranteur.constant.DoordashApiConstants;
 import com.restauranteur.model.DoorDashResponse;
 import com.restauranteur.model.PopularItem;
 import com.restauranteur.model.Restaurant;
@@ -20,21 +21,25 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 
-public class MainActivity extends AppCompatActivity implements RestaurantListener {
+public class MainActivity extends AppCompatActivity implements RestaurantListener, DoordashApiPaginator {
     private static final String BACK_STACK_MAIN_FRAGMENT_TAG = "main_fragment";
 
     private ArrayList<Restaurant> restaurants;
+    private int offset = 0;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         SoLoader.init(this, false);
-        final DoorDashDataParser.DoorDashDataService service = DoorDashDataParser.getDoorDashData();
 
+
+        final DoorDashDataParser.DoorDashDataService service = DoorDashDataParser.getDoorDashData(offset);
+
+        final ArrayList<Restaurant> restaurants = getRestaurants(service, true);
 
         displaySpinnerFragment();
-        displayRestaurants(service);
+        showMainFragment(restaurants);
     }
 
     private void displaySpinnerFragment() {
@@ -44,27 +49,30 @@ public class MainActivity extends AppCompatActivity implements RestaurantListene
                 .commit();
     }
 
-    private void displayRestaurants(final DoorDashDataParser.DoorDashDataService service) {
+    public ArrayList<Restaurant> getRestaurants(final DoorDashDataParser.DoorDashDataService service, final boolean shouldDisplay) {
         service.getRestaurants().subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 new Observer<DoorDashResponse>() {
                     @Override
-                    public void onSubscribe(@NonNull final Disposable d) {}
+                    public void onSubscribe(@NonNull final Disposable d) { }
 
                     @Override
                     public void onNext(@NonNull final DoorDashResponse doorDashResponse) {
                         restaurants = doorDashResponse.getStores();
-                        showMainFragment(restaurants);
+                        if (shouldDisplay) {
+                            showMainFragment(restaurants);
+                        }
                     }
 
                     @Override
                     public void onError(@NonNull final Throwable e) {
-                        showMainFragment(null);
+                        restaurants = null;
                     }
 
                     @Override
                     public void onComplete() { }
                 }
         );
+        return restaurants;
     }
 
     private void showMainFragment(@Nullable final ArrayList<Restaurant> restaurants) {
@@ -84,4 +92,16 @@ public class MainActivity extends AppCompatActivity implements RestaurantListene
                 .addToBackStack(BACK_STACK_MAIN_FRAGMENT_TAG)
                 .commit();
     }
+
+    @Override
+    public final ArrayList<Restaurant> getNextPage() {
+        final DoorDashDataParser.DoorDashDataService service = DoorDashDataParser.getDoorDashData(++offset);
+        return getRestaurants(service, false);
+    }
+
+    @Override
+    public int getOffset() {
+        return offset * DoordashApiConstants.DOORDASH_API_RESTAURANTS_LIMIT;
+    }
+
 }

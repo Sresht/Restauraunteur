@@ -37,8 +37,8 @@ public class ListItemWithImageComponentSpec {
             // TODO pass ID in too - just to be a unique id, even if unused
             @Prop final String title,
             @Prop @Nullable final String imageUrl,
-            @Prop(optional = true) final String description,
-            @Prop(optional = true) final String subtitle
+            @Prop(optional = true) @Nullable final String description,
+            @Prop(optional = true) @Nullable final String subtitle
     ) {
         Fresco.initialize(c.getApplicationContext());
 
@@ -48,6 +48,7 @@ public class ListItemWithImageComponentSpec {
         return Row.create(c)
                 .paddingDip(ALL, 16)
                 .child(
+                        imageUrl == null ? null :
                         FrescoImage.create(c)
                                 .placeholderImageRes(R.drawable.placeholder_restaurant_cover)
                                 .controller(controller)
