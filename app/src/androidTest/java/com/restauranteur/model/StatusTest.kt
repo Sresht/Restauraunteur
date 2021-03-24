@@ -1,15 +1,9 @@
 package com.restauranteur.model
 
 import android.os.Parcel
-import org.hamcrest.CoreMatchers
 import org.junit.Assert
 import org.junit.Test
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * @see [Testing documentation](http://d.android.com/tools/testing)
- */
 class StatusTest {
     @Test
     fun test_status_is_parcelable_not_unavailable() {

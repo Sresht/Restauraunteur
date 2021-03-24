@@ -3,6 +3,8 @@ package com.restauranteur.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.jetbrains.annotations.TestOnly;
+
 import java.util.ArrayList;
 
 public class Restaurant implements Parcelable {
@@ -25,6 +27,22 @@ public class Restaurant implements Parcelable {
         menus = in.createTypedArrayList(Menu.CREATOR);
         status = in.readTypedObject(Status.CREATOR);
         description = in.readString();
+    }
+
+    @TestOnly
+    public Restaurant(
+            final String name,
+            final String url,
+            final String cover_img_url,
+            final ArrayList<Menu> menus,
+            final Status status,
+            final String description) {
+        this.name = name;
+        this.url = url;
+        this.cover_img_url = cover_img_url;
+        this.menus = menus;
+        this.status = status;
+        this.description = description;
     }
 
     public String getName() {

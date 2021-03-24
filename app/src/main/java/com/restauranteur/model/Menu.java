@@ -3,6 +3,8 @@ package com.restauranteur.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.jetbrains.annotations.TestOnly;
+
 import java.util.ArrayList;
 
 public class Menu implements Parcelable {
@@ -15,6 +17,11 @@ public class Menu implements Parcelable {
 
     protected Menu(final Parcel in) {
         popular_items = in.createTypedArrayList(PopularItem.CREATOR);
+    }
+
+    @TestOnly
+    public Menu(final ArrayList<PopularItem> popularItems) {
+        this.popular_items = popularItems;
     }
 
     public ArrayList<PopularItem> getMenus() {

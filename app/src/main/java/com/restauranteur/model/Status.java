@@ -3,6 +3,8 @@ package com.restauranteur.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.jetbrains.annotations.TestOnly;
+
 public class Status implements Parcelable {
     private final String unavailable_reason;
     private int[] asap_minutes_range = new int[2];
@@ -12,14 +14,15 @@ public class Status implements Parcelable {
         return 0;
     }
 
-    public Status(final String unavailable_reason, final int[] asap_minutes_range) {
-        this.unavailable_reason = unavailable_reason;
-        this.asap_minutes_range = asap_minutes_range;
-    }
-
     protected Status(final Parcel in) {
         unavailable_reason = in.readString();
         in.readIntArray(asap_minutes_range);
+    }
+
+    @TestOnly
+    public Status(final String unavailable_reason, final int[] asap_minutes_range) {
+        this.unavailable_reason = unavailable_reason;
+        this.asap_minutes_range = asap_minutes_range;
     }
 
     public String getUnavailableReason() {

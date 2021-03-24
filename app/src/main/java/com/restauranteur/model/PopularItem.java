@@ -3,6 +3,8 @@ package com.restauranteur.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.jetbrains.annotations.TestOnly;
+
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -20,6 +22,13 @@ public class PopularItem implements Parcelable {
         name = in.readString();
         img_url = in.readString();
         price = in.readInt();
+    }
+
+    @TestOnly
+    public PopularItem(final String name, final String img_url, final int price) {
+        this.name = name;
+        this.img_url = img_url;
+        this.price = price;
     }
 
     public String getName() {
