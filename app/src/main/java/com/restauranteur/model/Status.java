@@ -5,11 +5,16 @@ import android.os.Parcelable;
 
 public class Status implements Parcelable {
     private final String unavailable_reason;
-    private final int[] asap_minutes_range = new int[]{2};
+    private int[] asap_minutes_range = new int[2];
 
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    public Status(final String unavailable_reason, final int[] asap_minutes_range) {
+        this.unavailable_reason = unavailable_reason;
+        this.asap_minutes_range = asap_minutes_range;
     }
 
     protected Status(final Parcel in) {
