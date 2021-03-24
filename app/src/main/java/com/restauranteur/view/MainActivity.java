@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.annotations.Nullable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -34,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantListene
 
 
         displaySpinnerFragment();
-        displayRestaurants(service);
+        fetchRestaurants(service);
     }
 
     private void displaySpinnerFragment() {
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantListene
                 .commit();
     }
 
-    private void displayRestaurants(final DoorDashDataParser.DoorDashDataService service) {
+    private void fetchRestaurants(final DoorDashDataParser.DoorDashDataService service) {
         service.getRestaurants().subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 new Observer<DoorDashResponse>() {
                     @Override
@@ -53,21 +52,24 @@ public class MainActivity extends AppCompatActivity implements RestaurantListene
                     @Override
                     public void onNext(@NonNull final DoorDashResponse doorDashResponse) {
                         restaurants = doorDashResponse.getStores();
-                        showMainFragment(restaurants);
                     }
 
                     @Override
                     public void onError(@NonNull final Throwable e) {
-                        showMainFragment(null);
+                        restaurants = null;
+                        showMainFragment();
                     }
 
                     @Override
-                    public void onComplete() { }
+                    public void onComplete() {
+                        // TODO to add pagination, we'd replace the onComplete with a callback
+                        showMainFragment();
+                    }
                 }
         );
     }
 
-    private void showMainFragment(@Nullable final ArrayList<Restaurant> restaurants) {
+    private void showMainFragment() {
         // We manually maintain the backstack here so that the loading screen
         // is not part of the backstack.
         getSupportFragmentManager()

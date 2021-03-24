@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import com.facebook.litho.ComponentContext;
 import com.facebook.litho.LithoView;
 import com.restauranteur.model.PopularItem;
-import com.restauranteur.parser.DoorDashDataParser;
 import com.restauranteur.view.component.MenuListComponent;
 
 import java.util.ArrayList;
@@ -26,7 +25,6 @@ public class RestaurantDetailsFragment extends Fragment {
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DoorDashDataParser.getDoorDashData();
         if (getArguments() != null) {
             menuItems = getArguments().getParcelableArrayList(MENU_ITEMS_KEY);
         }

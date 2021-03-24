@@ -10,7 +10,6 @@ import com.facebook.litho.LithoView;
 import com.facebook.litho.widget.Text;
 import com.restauranteur.R;
 import com.restauranteur.model.Restaurant;
-import com.restauranteur.parser.DoorDashDataParser;
 import com.restauranteur.view.component.RestaurantListComponent;
 
 import java.util.ArrayList;
@@ -28,7 +27,6 @@ public class MainFragment extends Fragment {
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DoorDashDataParser.getDoorDashData();
         if (getArguments() != null) {
             restaurants = getArguments().getParcelableArrayList(RESTAURANT_LIST_KEY);
         }
