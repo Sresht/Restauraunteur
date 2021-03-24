@@ -7,6 +7,8 @@ import org.jetbrains.annotations.TestOnly;
 
 import java.util.ArrayList;
 
+import static com.restauranteur.constant.DoordashApiConstants.DOORDASH_API_DESCRIPTION_DELIMITER;
+
 public class Restaurant implements Parcelable {
     private final String name;
     private final String url;
@@ -64,7 +66,7 @@ public class Restaurant implements Parcelable {
     public String getCuisine() {
         // TODO this isn't perfect, but it works most of the time. Might need to hit a different
         // endpoint
-        return description.split(",")[0];
+        return description.split(DOORDASH_API_DESCRIPTION_DELIMITER)[0];
     }
 
     public Status getStatus() {

@@ -5,9 +5,11 @@ import android.os.Parcelable;
 
 import org.jetbrains.annotations.TestOnly;
 
+import static com.restauranteur.constant.DoordashApiConstants.DOORDASH_API_RESTAURANT_ASAP_MINUTES_RANGE_LENGTH;
+
 public class Status implements Parcelable {
     private final String unavailable_reason;
-    private int[] asap_minutes_range = new int[2];
+    private int[] asap_minutes_range = new int[DOORDASH_API_RESTAURANT_ASAP_MINUTES_RANGE_LENGTH];
 
     @Override
     public int describeContents() {

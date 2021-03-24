@@ -17,9 +17,10 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 
-import static com.restauranteur.constant.Constants.DOORDASH_API_BASE_URL;
-import static com.restauranteur.constant.Constants.DOORDASH_API_RESTAURANTS_LIMIT;
-import static com.restauranteur.constant.Constants.SEARCH_COORDINATES;
+import static com.restauranteur.constant.DoordashApiConstants.DOORDASH_API_BASE_URL;
+import static com.restauranteur.constant.DoordashApiConstants.DOORDASH_API_GET_REQUEST_PARAMS;
+import static com.restauranteur.constant.DoordashApiConstants.DOORDASH_API_RESTAURANTS_LIMIT;
+import static com.restauranteur.constant.DoordashApiConstants.DOORDASH_API_SEARCH_COORDINATES;
 
 public class DoorDashDataParser {
     private static final int offset = 0;
@@ -52,14 +53,14 @@ public class DoorDashDataParser {
     private static String getDoorDashApiUrl() {
         return String.format(
                 DOORDASH_API_BASE_URL,
-                SEARCH_COORDINATES.first,
-                SEARCH_COORDINATES.second,
+                DOORDASH_API_SEARCH_COORDINATES.first,
+                DOORDASH_API_SEARCH_COORDINATES.second,
                 offset,
                 DOORDASH_API_RESTAURANTS_LIMIT);
     }
 
     public interface DoorDashDataService {
-        @GET(" ")
+        @GET(DOORDASH_API_GET_REQUEST_PARAMS)
         Observable<DoorDashResponse> getRestaurants();
     }
 }
