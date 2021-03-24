@@ -50,7 +50,7 @@ public class MainFragment extends Fragment {
         return LithoView.create(c,
                 RestaurantListComponent.create(c)
                         .restaurants(restaurants)
-                        .restaurantOnClickHandler((MainActivity) getActivity())
+                        .restaurantOnClickHandler((RestaurantOnClickHandler) getActivity())
                         .build());
     }
 
