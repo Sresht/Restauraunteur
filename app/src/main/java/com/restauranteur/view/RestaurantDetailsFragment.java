@@ -24,7 +24,7 @@ public class RestaurantDetailsFragment extends Fragment {
     private ArrayList<PopularItem> menuItems;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         DoorDashDataParser.getDoorDashData();
         if (getArguments() != null) {
@@ -33,9 +33,9 @@ public class RestaurantDetailsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater,
+                             @Nullable final ViewGroup container,
+                             @Nullable final Bundle savedInstanceState) {
         final ComponentContext c = new ComponentContext(getContext());
 
         return LithoView.create(c,

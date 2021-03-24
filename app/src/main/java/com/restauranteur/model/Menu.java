@@ -29,7 +29,7 @@ public class Menu implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int i) {
+    public void writeToParcel(final Parcel dest, final int i) {
         dest.writeList(popular_items);
     }
 

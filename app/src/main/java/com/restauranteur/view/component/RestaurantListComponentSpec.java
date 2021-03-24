@@ -56,6 +56,6 @@ public class RestaurantListComponentSpec {
         if (status.getUnavailableReason() != null) {
             return "Closed";
         }
-        return Integer.toString(status.getMinutesAway()) + " mins";
+        return status.getMinutesAway() + " mins";
     }
 }

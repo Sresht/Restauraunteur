@@ -74,7 +74,7 @@ public class Restaurant implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int i) {
+    public void writeToParcel(final Parcel dest, final int i) {
         dest.writeString(name);
         dest.writeString(url);
         dest.writeString(cover_img_url);

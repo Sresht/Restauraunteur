@@ -26,12 +26,12 @@ public class DoorDashDataParser {
     private static final int offset = 0;
 
     public static DoorDashDataService getDoorDashData() {
-        Gson gson = new GsonBuilder()
+        final Gson gson = new GsonBuilder()
                 .registerTypeAdapter(DoorDashResponse.class, new DoorDashDataDeserializer())
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
+        final Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(getDoorDashApiUrl())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

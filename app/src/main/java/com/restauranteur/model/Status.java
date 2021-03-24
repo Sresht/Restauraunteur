@@ -36,7 +36,7 @@ public class Status implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int i) {
+    public void writeToParcel(final Parcel dest, final int i) {
         dest.writeString(unavailable_reason);
         dest.writeIntArray(asap_minutes_range);
     }

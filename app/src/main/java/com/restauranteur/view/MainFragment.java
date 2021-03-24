@@ -25,7 +25,7 @@ public class MainFragment extends Fragment {
     private ArrayList<Restaurant> restaurants;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         DoorDashDataParser.getDoorDashData();
         if (getArguments() != null) {
@@ -34,9 +34,9 @@ public class MainFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater,
+                             @Nullable final ViewGroup container,
+                             @Nullable final Bundle savedInstanceState) {
         final ComponentContext c = new ComponentContext(getContext());
         if (restaurants == null) {
             // TODO be more descriptive based on the error.
@@ -58,8 +58,8 @@ public class MainFragment extends Fragment {
     public MainFragment() {}
 
     public static MainFragment newInstance(final ArrayList<Restaurant> restaurants) {
-        MainFragment fragment = new MainFragment();
-        Bundle args = new Bundle();
+        final MainFragment fragment = new MainFragment();
+        final Bundle args = new Bundle();
         if (restaurants != null) {
             args.putParcelableArrayList(RESTAURANT_LIST_KEY, restaurants);
         }

@@ -21,13 +21,12 @@ import io.reactivex.schedulers.Schedulers;
 
 
 public class MainActivity extends AppCompatActivity implements RestaurantListener {
-
     private static final String BACK_STACK_MAIN_FRAGMENT_TAG = "main_fragment";
 
     private ArrayList<Restaurant> restaurants;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         SoLoader.init(this, false);
@@ -49,16 +48,16 @@ public class MainActivity extends AppCompatActivity implements RestaurantListene
         service.getRestaurants().subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 new Observer<DoorDashResponse>() {
                     @Override
-                    public void onSubscribe(@NonNull Disposable d) {}
+                    public void onSubscribe(@NonNull final Disposable d) {}
 
                     @Override
-                    public void onNext(@NonNull DoorDashResponse doorDashResponse) {
+                    public void onNext(@NonNull final DoorDashResponse doorDashResponse) {
                         restaurants = doorDashResponse.getStores();
                         showMainFragment(restaurants);
                     }
 
                     @Override
-                    public void onError(@NonNull Throwable e) {
+                    public void onError(@NonNull final Throwable e) {
                         showMainFragment(null);
                     }
 

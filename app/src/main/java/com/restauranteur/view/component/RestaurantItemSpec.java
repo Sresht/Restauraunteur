@@ -84,7 +84,7 @@ public class RestaurantItemSpec {
 
     @OnEvent(ClickEvent.class)
     static void onClick(
-            ComponentContext c,
+            final ComponentContext c,
             @Prop final ArrayList<PopularItem> popularItems,
             @Prop final RestaurantListener restaurantListener
     ) {

@@ -45,7 +45,7 @@ public class PopularItem implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int i) {
+    public void writeToParcel(final Parcel dest, final int i) {
         dest.writeString(name);
         dest.writeString(img_url);
         dest.writeInt(price);
