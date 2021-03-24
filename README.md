@@ -3,7 +3,7 @@
 This is a basic sample app that I created to showcase how <a href=https://github.com/facebook/litho>Litho</a> can interface with <a href=https://gradle.org/>Gradle</a>, <a href=http://reactivex.io>RXJava</a>, and <a href=https://square.github.io/retrofit/>Retrofit</a>
 to pull data from an <a href="https://api.doordash.com/v1/store_feed/?lat=37.422740&lng=-122.139956&offset=0&limit=10">API</a> (Doordash, in this case), and display it in a RecyclerView.
 
-To view this app, you may directly download the SDK here.
+To view this app, you may directly download the <a href=https://github.com/Sresht/Restauraunteur/blob/master/restauranteur.apk>APK</a> here.
 
 ## Set Up
 
