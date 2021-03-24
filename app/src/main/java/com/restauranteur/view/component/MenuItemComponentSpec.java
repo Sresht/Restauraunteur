@@ -42,7 +42,7 @@ public class MenuItemComponentSpec {
                         FrescoImage.create(c)
                                 .placeholderImageRes(R.drawable.placeholder_restaurant_cover)
                                 .controller(controller)
-                                .widthDip(100)
+                                .widthPercent(30)
                                 .heightDip(70)
                                 .paddingDip(RIGHT, 30))
                 .flex(1)
@@ -55,12 +55,14 @@ public class MenuItemComponentSpec {
                                                 .textSizeSp(20))
                                 .child(Text.create(c).text(title).textSizeSp(14))
                                 .paddingDip(TOP, 15)
+                                .widthPercent(55)
                                 .flex(1))
                 .child(
                         Text.create(c)
                                 .text(price)
                                 .widthDip(70)
                                 .textSizeSp(14)
+                                .widthPercent(15)
                                 .paddingDip(TOP, 40))
                 .border(
                         Border.create(c)

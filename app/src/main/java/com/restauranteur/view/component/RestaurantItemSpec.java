@@ -52,7 +52,7 @@ public class RestaurantItemSpec {
                         FrescoImage.create(c)
                                 .placeholderImageRes(R.drawable.placeholder_restaurant_cover)
                                 .controller(controller)
-                                .widthDip(100)
+                                .widthPercent(30)
                                 .heightDip(70)
                                 .paddingDip(RIGHT, 30))
                                 .flex(1)
@@ -65,11 +65,12 @@ public class RestaurantItemSpec {
                                                 .textSizeSp(20))
                                 .child(Text.create(c).text(cuisine).textSizeSp(14))
                                 .paddingDip(TOP, 15)
+                                .widthPercent(55)
                                 .flex(1))
                 .child(
                         Text.create(c)
                                 .text(displayDistance)
-                                .widthDip(70)
+                                .widthPercent(15)
                                 .textSizeSp(14)
                                 .paddingDip(TOP, 40))
                 .border(
