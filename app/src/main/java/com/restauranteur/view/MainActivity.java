@@ -86,6 +86,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onRestaurantClicked(final ArrayList<PopularItem> menuItems) {
+        // This implementation is used to propagate a click handler from Litho all the way up
+        // so that a fragment update can be made.
+
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content, RestaurantDetailsFragment.newInstance(menuItems))
