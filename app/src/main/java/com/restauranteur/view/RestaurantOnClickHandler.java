@@ -4,6 +4,6 @@ import com.restauranteur.model.PopularItem;
 
 import java.util.ArrayList;
 
-public interface RestaurantListener {
+public interface RestaurantOnClickHandler {
     void onRestaurantClicked(final ArrayList<PopularItem> menuItems);
 }

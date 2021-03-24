@@ -17,7 +17,7 @@ import com.restauranteur.R;
 import com.restauranteur.model.PopularItem;
 import com.restauranteur.model.Restaurant;
 import com.restauranteur.model.Status;
-import com.restauranteur.view.RestaurantListener;
+import com.restauranteur.view.RestaurantOnClickHandler;
 
 import java.util.ArrayList;
 
@@ -67,9 +67,9 @@ public class RestaurantListComponentSpec {
     static void onListItemClick(
             final ComponentContext c,
             @Param final ArrayList<PopularItem> popularItems,
-            @Prop final RestaurantListener restaurantListener
+            @Prop final RestaurantOnClickHandler restaurantOnClickHandler
     ) {
-        restaurantListener.onRestaurantClicked(popularItems);
+        restaurantOnClickHandler.onRestaurantClicked(popularItems);
     }
 
 }

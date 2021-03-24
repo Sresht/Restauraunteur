@@ -19,9 +19,11 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 
-public class MainActivity extends AppCompatActivity implements RestaurantListener {
+public class MainActivity extends AppCompatActivity
+        implements RestaurantOnClickHandler, RestaurantListObserver {
     private static final String BACK_STACK_MAIN_FRAGMENT_TAG = "main_fragment";
 
+    // TODO use this variable for reading/writing to SQLite/SharedPrefs for caching
     private ArrayList<Restaurant> restaurants;
 
     @Override
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantListene
 
 
         displaySpinnerFragment();
-        fetchRestaurants(service);
+        fetchRestaurants(service, this);
     }
 
     private void displaySpinnerFragment() {
@@ -43,7 +45,9 @@ public class MainActivity extends AppCompatActivity implements RestaurantListene
                 .commit();
     }
 
-    private void fetchRestaurants(final DoorDashDataParser.DoorDashDataService service) {
+    private void fetchRestaurants(
+            final DoorDashDataParser.DoorDashDataService service,
+            final RestaurantListObserver observer) {
         service.getRestaurants().subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 new Observer<DoorDashResponse>() {
                     @Override
@@ -57,13 +61,12 @@ public class MainActivity extends AppCompatActivity implements RestaurantListene
                     @Override
                     public void onError(@NonNull final Throwable e) {
                         restaurants = null;
-                        showMainFragment();
+                        observer.onRestaurantListChange(restaurants);
                     }
 
                     @Override
                     public void onComplete() {
-                        // TODO to add pagination, we'd replace the onComplete with a callback
-                        showMainFragment();
+                        observer.onRestaurantListChange(restaurants);
                     }
                 }
         );
@@ -85,5 +88,11 @@ public class MainActivity extends AppCompatActivity implements RestaurantListene
                 .replace(R.id.content, RestaurantDetailsFragment.newInstance(menuItems))
                 .addToBackStack(BACK_STACK_MAIN_FRAGMENT_TAG)
                 .commit();
+    }
+
+    @Override
+    public void onRestaurantListChange(ArrayList<Restaurant> newRestaurants) {
+        restaurants = newRestaurants;
+        showMainFragment();
     }
 }
