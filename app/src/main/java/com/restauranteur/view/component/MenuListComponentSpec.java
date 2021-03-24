@@ -36,9 +36,9 @@ public class MenuListComponentSpec {
             final ArrayList<PopularItem> menuItems) {
         for (final PopularItem curr : menuItems) {
             binder.appendItem(
-                    MenuItemComponent.create(c)
+                    ListItemWithImageComponent.create(c)
                             .title(curr.getName())
-                            .price(curr.getHumanReadablePrice())
+                            .description(curr.getHumanReadablePrice())
                             .imageUrl(curr.getImageUrl())
                             .build());
         }
