@@ -23,16 +23,14 @@ import static com.restauranteur.constant.DoordashApiConstants.DOORDASH_API_RESTA
 import static com.restauranteur.constant.DoordashApiConstants.DOORDASH_API_SEARCH_COORDINATES;
 
 public class DoorDashDataParser {
-    private static final int offset = 0;
-
-    public static DoorDashDataService getDoorDashData() {
+    public static DoorDashDataService getDoorDashData(final int pageNumber) {
         final Gson gson = new GsonBuilder()
                 .registerTypeAdapter(DoorDashResponse.class, new DoorDashDataDeserializer())
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create();
 
         final Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(getDoorDashApiUrl())
+                .baseUrl(getDoorDashApiUrl(pageNumber))
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
@@ -50,12 +48,12 @@ public class DoorDashDataParser {
         }
     }
 
-    private static String getDoorDashApiUrl() {
+    private static String getDoorDashApiUrl(final int pageNumber) {
         return String.format(
                 DOORDASH_API_BASE_URL,
                 DOORDASH_API_SEARCH_COORDINATES.first,
                 DOORDASH_API_SEARCH_COORDINATES.second,
-                offset,
+                pageNumber * DOORDASH_API_RESTAURANTS_LIMIT,
                 DOORDASH_API_RESTAURANTS_LIMIT);
     }
 

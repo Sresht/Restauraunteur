@@ -26,12 +26,15 @@ public class MainActivity extends AppCompatActivity
     // TODO use this variable for reading/writing to SQLite/SharedPrefs for caching
     private ArrayList<Restaurant> restaurants;
 
+    private int offset = 0;
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         SoLoader.init(this, false);
-        final DoorDashDataParser.DoorDashDataService service = DoorDashDataParser.getDoorDashData();
+        final DoorDashDataParser.DoorDashDataService service =
+                DoorDashDataParser.getDoorDashData(offset);
 
 
         displaySpinnerFragment();
