@@ -1,7 +1,6 @@
 package com.restauranteur.view;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.facebook.soloader.SoLoader;
 import com.restauranteur.R;
@@ -22,6 +21,10 @@ import io.reactivex.schedulers.Schedulers;
 
 
 public class MainActivity extends AppCompatActivity implements RestaurantListener {
+
+    private static final String BACK_STACK_MAIN_FRAGMENT_TAG = "main_fragment";
+
+    private ArrayList<Restaurant> restaurants;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +53,8 @@ public class MainActivity extends AppCompatActivity implements RestaurantListene
 
                     @Override
                     public void onNext(@NonNull DoorDashResponse doorDashResponse) {
-                        showMainFragment(new ArrayList<>(doorDashResponse.getStores()));
+                        restaurants = doorDashResponse.getStores();
+                        showMainFragment(restaurants);
                     }
 
                     @Override
@@ -65,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements RestaurantListene
     }
 
     private void showMainFragment(@Nullable final ArrayList<Restaurant> restaurants) {
+        // We manually maintain the backstack here so that the loading screen
+        // is not part of the backstack.
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content, MainFragment.newInstance(restaurants))
@@ -73,6 +79,10 @@ public class MainActivity extends AppCompatActivity implements RestaurantListene
 
     @Override
     public void onRestaurantClicked(final ArrayList<PopularItem> menuItems) {
-        Toast.makeText(this, menuItems.get(0).getName(), Toast.LENGTH_SHORT).show();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content, RestaurantDetailsFragment.newInstance(menuItems))
+                .addToBackStack(BACK_STACK_MAIN_FRAGMENT_TAG)
+                .commit();
     }
 }

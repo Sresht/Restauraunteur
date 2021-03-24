@@ -66,5 +66,4 @@ public class MainFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
 }
