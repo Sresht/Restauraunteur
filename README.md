@@ -5,16 +5,17 @@ to pull data from an <a href="https://api.doordash.com/v1/store_feed/?lat=37.422
 
 To view this app, you may directly download the SDK here.
 
-## Architecture
-
-This app is not meant to be complex, but it's meant to be architected in ways similar to large-scale apps. This repository has
-four main facets, as detailed below.
-
 ## Set Up
 
 Cloning this repository should be all that's needed! Gradle is used as the build tool, and it should install all dependencies as needed.
 
 To install Gradle, please run `homebrew install gradle` (on Mac) or visit <a href=https://gradle.org/>https://gradle.org/</a>.
+
+## Architecture
+
+This app is not meant to be complex, but it's meant to be architected in ways similar to large-scale apps. This repository has
+four main facets, as detailed below.
+
 
 ### 1. Android Views
 <ol type="a">
