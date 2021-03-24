@@ -44,13 +44,9 @@ public class RestaurantListComponentSpec {
                     public void onScrolled(@NonNull final RecyclerView recyclerView, final int dx, final int dy) {
                       super.onScrolled(recyclerView, dx, dy);
 
-                      // use the recyclerBinder to determine what items at what position are visible -
-                      // (you could also use the findLastVisibleItemPosition() method depending on your implementation)
                       int lastVisibleItemPosition = binder.findLastVisibleItemPosition();
 
-                      //check if it is within range relative to the current available items and is not loading (room to improve/modify logic pending use case)
                       if ((binder.getItemCount() - 5) <= lastVisibleItemPosition) {
-                          //if so - use your service to get the next page
                           final ArrayList<Restaurant> nextRestaurants = paginator.getNextPage();
                           if (nextRestaurants != null && nextRestaurants.size() > 0) {
                               addRestaurantsToComponent(c, binder, nextRestaurants);
