@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Restauranteur</string>
+    <string name="user_facing_error">An error has occurred. Please close the app and try again.</string>
+    <string name="restaurant_closed">Closed</string>
+    <plurals name="restaurant_minutes_away">
+        <item quantity="one">1 min</item>
+        <item quantity="other">%1$d mins</item>
+    </plurals>
 </resources>

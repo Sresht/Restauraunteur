@@ -1,5 +1,7 @@
 package com.restauranteur.view.component;
 
+import android.content.res.Resources;
+
 import com.facebook.litho.Component;
 import com.facebook.litho.ComponentContext;
 import com.facebook.litho.annotations.LayoutSpec;
@@ -8,6 +10,7 @@ import com.facebook.litho.annotations.Prop;
 import com.facebook.litho.widget.LinearLayoutInfo;
 import com.facebook.litho.widget.Recycler;
 import com.facebook.litho.widget.RecyclerBinder;
+import com.restauranteur.R;
 import com.restauranteur.model.Restaurant;
 import com.restauranteur.model.Status;
 import com.restauranteur.view.RestaurantListener;
@@ -45,17 +48,17 @@ public class RestaurantListComponentSpec {
                             .title(curr.getName())
                             .coverImageUrl(curr.getCoverImageUrl())
                             .cuisine(curr.getCuisine())
-                            .displayDistance(getDisplayDistance(curr.getStatus()))
+                            .displayDistance(getDisplayDistance(c.getApplicationContext().getResources(), curr.getStatus()))
                             .popularItems(curr.getMenus().get(0).getMenus())
                             .restaurantListener(restaurantListener)
                             .build());
         }
     }
 
-    private static String getDisplayDistance(final Status status) {
+    private static String getDisplayDistance(final Resources res, final Status status) {
         if (status.getUnavailableReason() != null) {
-            return "Closed";
+            return res.getString(R.string.restaurant_closed);
         }
-        return status.getMinutesAway() + " mins";
+        return res.getQuantityString(R.plurals.restaurant_minutes_away, status.getMinutesAway(), status.getMinutesAway());
     }
 }

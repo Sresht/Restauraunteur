@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.facebook.litho.ComponentContext;
 import com.facebook.litho.LithoView;
 import com.facebook.litho.widget.Text;
+import com.restauranteur.R;
 import com.restauranteur.model.Restaurant;
 import com.restauranteur.parser.DoorDashDataParser;
 import com.restauranteur.view.component.RestaurantListComponent;
@@ -44,7 +45,7 @@ public class MainFragment extends Fragment {
             return LithoView.create(
                     getContext(),
                     Text.create(c)
-                            .text("An error has occurred. Please close the app and try again.")
+                            .textRes(R.string.user_facing_error)
                             .build());
         }
 
