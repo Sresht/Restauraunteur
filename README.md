@@ -1,9 +1,9 @@
 # Restauraunteur App
 
-This is a basic sample app that I created to showcase how Litho can interface with Gradle, RXJava, and Retrofit
-to pull data from an API (Doordash, in this case), and display it in a RecyclerView.
+This is a basic sample app that I created to showcase how <a href=https://github.com/facebook/litho>Litho</a> can interface with <a href=https://gradle.org/>Gradle</a>, <a href=http://reactivex.io>RXJava</a>, and <a href=https://square.github.io/retrofit/>Retrofit</a>
+to pull data from an <a href="https://api.doordash.com/v1/store_feed/?lat=37.422740&lng=-122.139956&offset=0&limit=10">API</a> (Doordash, in this case), and display it in a RecyclerView.
 
-To view this app, you may just directly download the SDK here
+To view this app, you may directly download the SDK here.
 
 ## Architecture
 
@@ -55,6 +55,9 @@ The most obvious gap here is pagination. All data are pulled down in one query, 
 I have attempted <a href=https://github.com/Sresht/Restauraunteur/tree/pagination>a solution</a> to adding pagination, but it doesn't interface well (at least as far as I have tried) with Litho unless we do some hackiness.
 If you come up with an idea that's not hacky, please feel free to drop me a Pull Request!
 
-<li> <b>Testing</b>
-TODO
+<li> <b>Broken Unit Tests</b>
+I added unit testing for each Model class, but the RestaurantTest.kt and MenuTest.kt tests aren't passing because of a Parcel-related Exception. When I have more time, I will investigate this.
+  
+<li> <b>Screenshot Tests</b>
+It doesn't make sense to add <a href=https://facebook.github.io/screenshot-tests-for-android/>screenshot tests</a> until a visual design is finalized and expected not to change, but once that happens, it makes sense to do so for critical flwos to alert regressions.
 </ol>
