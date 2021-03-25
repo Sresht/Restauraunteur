@@ -60,5 +60,9 @@ If you come up with an idea that's not hacky, please feel free to drop me a Pull
 I added unit testing for each Model class, but the RestaurantTest.kt and MenuTest.kt tests aren't passing because of a Parcel-related Exception. When I have more time, I will investigate this.
   
 <li> <b>Screenshot Tests</b>
-It doesn't make sense to add <a href=https://facebook.github.io/screenshot-tests-for-android/>screenshot tests</a> until a visual design is finalized and expected not to change, but once that happens, it makes sense to do so for critical flwos to alert regressions.
+It doesn't make sense to add <a href=https://facebook.github.io/screenshot-tests-for-android/>screenshot tests</a> until a visual design is finalized and expected not to change, but once that happens, it makes sense to do so for critical flows to alert regressions.
+
+<li> <b>Restaurant-level Info</b>
+There is technically another API that DoorDash provides for restaurant-level data, but the extensive menu on that page didn't seem worth displaying for a simple app, when we could just display popular items for now. In a future iteration, I might change the second screen so that it calls the restaurant API.
+
 </ol>
